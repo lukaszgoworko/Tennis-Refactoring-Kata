@@ -12,28 +12,34 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
 
     override fun getScore(): String {
         var score = ""
-        var tempScore: Int
         if (isSameScore) {
             score = convertIfSameScore
         } else if (isAdvantageOrWinScore) {
             score = calculateOnAdvantageOrWin
         } else {
-            for (i in 1..2) {
-                if (i == 1)
-                    tempScore = m_score1
-                else {
-                    score += "-"
-                    tempScore = m_score2
-                }
-                when (tempScore) {
-                    0 -> score += "Love"
-                    1 -> score += "Fifteen"
-                    2 -> score += "Thirty"
-                    3 -> score += "Forty"
-                }
-            }
+            score = calculateStandardScore(score)
         }
         return score
+    }
+
+    private fun calculateStandardScore(score: String): String {
+        var score1 = score
+        var tempScore: Int
+        for (i in 1..2) {
+            if (i == 1)
+                tempScore = m_score1
+            else {
+                score1 += "-"
+                tempScore = m_score2
+            }
+            when (tempScore) {
+                0 -> score1 += "Love"
+                1 -> score1 += "Fifteen"
+                2 -> score1 += "Thirty"
+                3 -> score1 += "Forty"
+            }
+        }
+        return score1
     }
 
     private val calculateOnAdvantageOrWin: String
